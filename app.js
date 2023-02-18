@@ -7,7 +7,16 @@ const logTime = (req, res, next) => {
   next();
 };
 
-app.get("/", logTime, (req, res) => {
+app.use(logTime);
+
+const passOnMessage = (req, res, next) => {
+  console.log("Passing on a message!");
+  res.passedMessage = "Hello from passOnMessage!";
+  next();
+};
+
+app.get("/", [logTime, passOnMessage], (req, res) => {
+  console.log("Passed Message: ", res.passedMessage);
   res.send("Hello World! from app");
 });
 
@@ -21,6 +30,11 @@ app.get("/goodbye/until/:time", (req, res) => {
 
 app.get(`/goodbye/*`, (req, res) => {
   res.send(`laters!`);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.send("an error occurred!");
 });
 
 const port = 3000;
