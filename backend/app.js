@@ -9,6 +9,8 @@ const csurf = require("csurf");
 const cors = require("cors");
 const { isProduction } = require("./config/keys");
 
+require("./models/User");
+
 const usersRouter = require("./routes/api/users");
 const tweetsRouter = require("./routes/api/tweets");
 const csrfRouter = require("./routes/api/csrf");
@@ -42,7 +44,7 @@ app.use(
 // Attach Express routers
 app.use("/api/users", usersRouter);
 app.use("/api/tweets", tweetsRouter);
-app.use("api/csrf", csrfRouter);
+app.use("/api/csrf", csrfRouter);
 
 // Express custom middleware for catching all unmatched requests and formatting
 // a 404 error to be sent as the response.
@@ -67,5 +69,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app;
 module.exports = app;
