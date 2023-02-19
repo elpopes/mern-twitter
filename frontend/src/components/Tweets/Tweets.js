@@ -5,7 +5,12 @@ import TweetBox from "./TweetBox";
 
 function Tweets() {
   const dispatch = useDispatch();
-  const tweets = useSelector((state) => Object.values(state.tweets.all));
+
+  const state = useSelector((state) => state);
+
+  const tweets = Object.values(state.tweets.all);
+
+  //   const tweets = useSelector((state) => Object.values(state.tweets.all));
 
   useEffect(() => {
     dispatch(fetchTweets());
